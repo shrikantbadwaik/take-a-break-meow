@@ -9,7 +9,23 @@ const {
 } = require("electron");
 const path = require("path");
 
-const APP_TITLE = "Take a Break Meow";
+const APP_TITLE = "Take a break, Meow";
+app.setName(APP_TITLE);
+
+function setMinimalApplicationMenu() {
+  if (process.platform === "darwin") {
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate([
+        {
+          label: APP_TITLE,
+          submenu: [{ role: "quit" }],
+        },
+      ])
+    );
+  } else {
+    Menu.setApplicationMenu(null);
+  }
+}
 
 let settingsWindow = null;
 let overlayWindow = null;
@@ -277,6 +293,7 @@ function buildTray() {
 }
 
 app.whenReady().then(() => {
+  setMinimalApplicationMenu();
   buildTray();
   showSettingsWindow();
   app.on("activate", () => {

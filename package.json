@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "app:mac": "electron-builder --dir --mac && open \"$(find dist -maxdepth 3 -name '*.app' | head -n 1)\"",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist:win:msix": "electron-builder --win msix"
@@ -17,15 +18,14 @@
   },
   "build": {
     "appId": "com.takeabreakmeow.app",
-    "productName": "Take a Break Meow",
+    "productName": "Take a break, Meow",
     "files": ["main.js", "preload.js", "*.html", "assets/**", "build/**"],
     "directories": {
       "buildResources": "build"
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "target": ["dmg", "zip"],
-      "icon": "build/nekoicon48.png"
+      "target": ["dmg", "zip"]
     },
     "win": {
       "target": [
@@ -38,7 +38,7 @@
       "publisherName": "REPLACE_WITH_STORE_PUBLISHER_DISPLAY_NAME",
       "verifyUpdateCodeSignature": false
     },
-    "msix": {
+    "appx": {
       "identityName": "REPLACE_WITH_PARTNER_CENTER_IDENTITY_NAME",
       "publisher": "CN=REPLACE_WITH_CERTIFICATE_SUBJECT_CN",
       "publisherDisplayName": "REPLACE_WITH_PUBLISHER_DISPLAY_NAME",

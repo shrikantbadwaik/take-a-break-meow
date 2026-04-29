@@ -1,6 +1,6 @@
-# Take a Break Meow
+# Take a break, Meow
 
-**Take a Break Meow** is a small desktop timer for focus and rest. You choose how long you want to stay “on task,” then how long to recover. When your usage time runs out, a full-screen break appears—complete with a friendly cat—until the break countdown finishes. After that, your usage timer starts again automatically.
+**Take a break, Meow** is a small desktop timer for focus and rest. You choose how long you want to stay “on task,” then how long to recover. When your usage time runs out, a full-screen break appears—complete with a friendly cat—until the break countdown finishes. After that, your usage timer starts again automatically.
 
 The idea is similar in spirit to wellness timers that interrupt scrolling with a cute interruption; this app runs on your desktop as a standalone Electron app.
 
