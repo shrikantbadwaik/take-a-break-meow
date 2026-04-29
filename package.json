@@ -1,0 +1,51 @@
+{
+  "name": "take-a-break-meow",
+  "version": "1.0.0",
+  "description": "Friendly usage timer — when time is up, a cat takes over until your break ends.",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win:msix": "electron-builder --win msix"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.takeabreakmeow.app",
+    "productName": "Take a Break Meow",
+    "files": ["main.js", "preload.js", "*.html", "assets/**", "build/**"],
+    "directories": {
+      "buildResources": "build"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": ["dmg", "zip"],
+      "icon": "build/nekoicon48.png"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "msix",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "publisherName": "REPLACE_WITH_STORE_PUBLISHER_DISPLAY_NAME",
+      "verifyUpdateCodeSignature": false
+    },
+    "msix": {
+      "identityName": "REPLACE_WITH_PARTNER_CENTER_IDENTITY_NAME",
+      "publisher": "CN=REPLACE_WITH_CERTIFICATE_SUBJECT_CN",
+      "publisherDisplayName": "REPLACE_WITH_PUBLISHER_DISPLAY_NAME",
+      "applicationId": "TakeABreakMeow",
+      "backgroundColor": "#faf6ef",
+      "showNameOnTiles": true,
+      "languages": ["en-US"]
+    }
+  }
+}

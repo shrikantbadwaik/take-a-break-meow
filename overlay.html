@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; media-src 'self' file: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;" />
+    <title>Break — Take a Break Meow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #faf6ef;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: "Zen Maru Gothic", system-ui, sans-serif;
+        background: transparent;
+        color: var(--cream);
+        cursor: default;
+        user-select: none;
+      }
+
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(12, 10, 9, 0.92);
+        z-index: 0;
+      }
+
+      .stage {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: space-between;
+        min-height: 0;
+        height: 100%;
+        pointer-events: none;
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+      }
+
+      /* Clock + subtitle stay in the top band so the cat never covers them */
+      .break-header {
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 3;
+        padding-top: max(16px, env(safe-area-inset-top, 0px));
+        padding-bottom: 8px;
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+        text-align: center;
+      }
+
+      #clock {
+        display: inline-block;
+        font-size: clamp(2.25rem, 10vw, 5.5rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.02em;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 16px;
+        padding: 0.28em 0.4em;
+        text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+      }
+
+      .sub {
+        margin: 12px auto 0;
+        max-width: min(94vw, 640px);
+        width: 100%;
+        text-align: center;
+        font-size: clamp(0.88rem, 2.2vw, 1.05rem);
+        line-height: 1.45;
+        opacity: 0.9;
+        color: var(--cream);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .video-wrap {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 8px 0;
+      }
+
+      #cat-main,
+      #cat-sleep {
+        max-height: 100%;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      #cat-main {
+        animation: slide-in 3s forwards;
+      }
+
+      #cat-sleep {
+        display: none;
+      }
+
+      #cat-sleep.playing {
+        display: block;
+        animation: none;
+        transform: translateX(0);
+      }
+
+      @keyframes slide-in {
+        from {
+          transform: translateX(100vw);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <div class="stage">
+      <header class="break-header">
+        <div id="clock">0:00</div>
+        <p class="sub">
+          Break time — stretch, hydrate, look away from the screen.
+        </p>
+      </header>
+
+      <div class="video-wrap">
+        <video
+          id="cat-main"
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+          src="./assets/neko1.webm"
+        ></video>
+        <video
+          id="cat-sleep"
+          muted
+          playsinline
+          loop
+          preload="auto"
+          src="./assets/neko2.webm"
+        ></video>
+      </div>
+    </div>
+
+    <script>
+      const clock = document.getElementById("clock");
+      const catMain = document.getElementById("cat-main");
+      const catSleep = document.getElementById("cat-sleep");
+
+      function fmt(ms) {
+        if (ms <= 0) return "0:00";
+        const s = Math.ceil(ms / 1000);
+        const m = Math.floor(s / 60);
+        const r = s % 60;
+        return m + ":" + String(r).padStart(2, "0");
+      }
+
+      window.breakMeow.onTick((payload) => {
+        if (payload.phase === "break") {
+          clock.textContent = fmt(payload.remainingMs);
+        }
+      });
+
+      catMain.addEventListener("ended", () => {
+        catMain.style.display = "none";
+        catSleep.classList.add("playing");
+        catSleep.style.display = "block";
+        catSleep.play().catch(() => {});
+      });
+    </script>
+  </body>
+</html>
