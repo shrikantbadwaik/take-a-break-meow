@@ -17,7 +17,7 @@
     "electron-builder": "^25.1.8"
   },
   "build": {
-    "appId": "com.takeabreakmeow.app",
+    "appId": "com.shrikant-badwaik.takeabreakmeow.app",
     "productName": "Take a break, Meow",
     "files": ["main.js", "preload.js", "*.html", "assets/**", "build/**"],
     "directories": {
@@ -35,14 +35,14 @@
         }
       ],
       "icon": "build/icon.ico",
-      "publisherName": "REPLACE_WITH_STORE_PUBLISHER_DISPLAY_NAME",
+      "publisherName": "shrikant-badwaik",
       "verifyUpdateCodeSignature": false
     },
     "appx": {
-      "identityName": "REPLACE_WITH_PARTNER_CENTER_IDENTITY_NAME",
-      "publisher": "CN=REPLACE_WITH_CERTIFICATE_SUBJECT_CN",
-      "publisherDisplayName": "REPLACE_WITH_PUBLISHER_DISPLAY_NAME",
-      "applicationId": "TakeABreakMeow",
+      "identityName": "shrikant-badwaik.TakeabreakMeow",
+      "publisher": "CN=CE1F313D-42F7-404E-B32F-62FB404E7CBB",
+      "publisherDisplayName": "shrikant-badwaik",
+      "applicationId": "shrikant-badwaik.TakeabreakMeow",
       "backgroundColor": "#faf6ef",
       "showNameOnTiles": true,
       "languages": ["en-US"]
