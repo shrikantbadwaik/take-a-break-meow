@@ -1,4 +1,4 @@
-# Build MSIX on Windows in CI; download the artifact from the workflow run.
+# Build Windows Store package (electron-builder target: appx → dist/*.appx) on Windows CI.
 name: Windows MSIX
 
 on:
@@ -24,8 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build MSIX
-        run: npm run dist:win:msix
+      - name: Build AppX (Store package)
+        run: npm run dist:win:appx
 
       # Optional: sign the MSIX in CI (requires repo secrets — see comments below).
       # - name: Sign MSIX (optional)
@@ -36,9 +36,9 @@ jobs:
       #     [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\cert.pfx", $bytes)
       #     # Use signtool from Windows SDK or SignTool task; align with your Partner Center cert.
 
-      - name: Upload MSIX artifact
+      - name: Upload Store package artifact
         uses: actions/upload-artifact@v4
         with:
           name: take-a-break-meow-msix
-          path: dist/*.msix
+          path: dist/*.appx
           if-no-files-found: error
