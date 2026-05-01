@@ -42,10 +42,29 @@ let session = {
 };
 
 function createTrayIcon() {
-  const size = process.platform === "darwin" ? 18 : 16;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24"><text y="18" font-size="16">🐱</text></svg>`;
+  const iconPath = path.join(__dirname, "build", "icon.png");
+  let image = nativeImage.createFromPath(iconPath);
+  const trayPx =
+    process.platform === "darwin" ? 22 : process.platform === "win32" ? 16 : 22;
+
+  if (!image.isEmpty()) {
+    const { width, height } = image.getSize();
+    if (width !== trayPx || height !== trayPx) {
+      image = image.resize({ width: trayPx, height: trayPx });
+    }
+    return image;
+  }
+
+  // Fallback if icon.png is missing: simple shape (emoji-in-SVG is unreliable on Windows tray).
+  const svgMarkup = [
+    '<svg xmlns="http://www.w3.org/2000/svg" width="',
+    String(trayPx),
+    '" height="',
+    String(trayPx),
+    '" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#5c8f71"/></svg>',
+  ].join("");
   return nativeImage.createFromDataURL(
-    "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg)
+    "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgMarkup)
   );
 }
 
