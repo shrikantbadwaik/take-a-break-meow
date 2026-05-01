@@ -8,34 +8,45 @@
   "scripts": {
     "start": "electron .",
     "app:mac": "electron-builder --dir --mac && open \"$(find dist -maxdepth 3 -name '*.app' | head -n 1)\"",
+    "app:win": "electron-builder --win dir --x64 && explorer dist\\win-unpacked",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist:win:msix": "electron-builder --win msix"
   },
   "devDependencies": {
-    "electron": "^33.2.0",
-    "electron-builder": "^25.1.8"
+    "electron": "^41.4.0",
+    "electron-builder": "^26.8.1"
   },
   "build": {
     "appId": "com.shrikant-badwaik.takeabreakmeow.app",
     "productName": "Take a break, Meow",
-    "files": ["main.js", "preload.js", "*.html", "assets/**", "build/**"],
+    "files": [
+      "main.js",
+      "preload.js",
+      "*.html",
+      "assets/**",
+      "build/**"
+    ],
     "directories": {
       "buildResources": "build"
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
       "target": [
         {
           "target": "msix",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ],
       "icon": "build/icon.ico",
-      "publisherName": "shrikant-badwaik",
       "verifyUpdateCodeSignature": false
     },
     "appx": {
@@ -45,7 +56,9 @@
       "applicationId": "shrikant-badwaik.TakeabreakMeow",
       "backgroundColor": "#faf6ef",
       "showNameOnTiles": true,
-      "languages": ["en-US"]
+      "languages": [
+        "en-US"
+      ]
     }
   }
 }
