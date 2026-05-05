@@ -1,6 +1,6 @@
 {
   "name": "take-a-break-meow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Friendly usage timer — when time is up, a cat takes over until your break ends.",
   "main": "main.js",
   "author": "",
